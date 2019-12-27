@@ -1,26 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
+import {useHistory} from 'react-router-dom';
 import './App.css';
+import {Route, Switch} from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Navbar from "./components/Navbar";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import {MuiThemeProvider} from "@material-ui/core";
+import themeFile from "./util/theme";
+import jwtDecode from "jwt-decode";
+import AuthRoute from "./util/AuthRoute";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const theme = createMuiTheme(themeFile);
+
+let authenticated;
+const token=localStorage.FBIdToken;
+if(token){
+    const decodedToken=jwtDecode(token);
+    if(decodedToken.exp*1000<Date.now()){
+        window.location.href='/login';
+        authenticated = false;
+        console.log('false')
+    } else {
+        authenticated=true;
+        console.log('true')
+    }
 }
 
-export default App;
+export default function App() {
+    let history=useHistory();
+
+    return (
+        <MuiThemeProvider theme={theme}>
+            <div className="App">
+                <Navbar/>
+                <div className="container">
+                    <Switch>
+                        <Route exact path='/' component={Home}/>
+                        <AuthRoute exact path='/login' component={Login} authenticated={authenticated}/>
+                        <AuthRoute exact path='/signup' component={Signup} authenticated={authenticated}/>
+                    </Switch>
+                </div>
+            </div>
+        </MuiThemeProvider>
+    );
+}
+
