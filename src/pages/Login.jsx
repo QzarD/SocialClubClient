@@ -40,10 +40,9 @@ const styles = {
     }
 };
 
-function Login({classes, history}) {
+function Login({classes, history, loginUser, UI:{loading, errors}}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState({});
     const handleSubmit = (e) => {
         e.preventDefault();
         const userData = {

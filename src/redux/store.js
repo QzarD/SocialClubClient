@@ -1,5 +1,8 @@
 import thunk from "redux-thunk";
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
+import {userReducer} from "./userReducer";
+import {uiReducer} from "./uiReducer";
+import {dataReducer} from "./dataReducer";
 
 
 const initialState={};

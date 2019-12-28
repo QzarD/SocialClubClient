@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import Grid from "@material-ui/core/Grid";
 import imgAppIco from "../images/unnamed.jpg";
 import {TextField, Typography, Button, CircularProgress} from "@material-ui/core";
-import axios from "axios";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {signupUser} from "../redux/userReducer";
 
 const styles={
     typography:{
@@ -39,33 +40,20 @@ const styles={
     }
 };
 
-function Signup({classes, history}) {
+function Signup({classes, history, signupUser, UI:{loading, errors}}) {
     const [email, setEmail]=useState('');
     const [password, setPassword]=useState('');
     const [confirmPassword, setConfirmPassword]=useState('');
     const [handle, setHandle]=useState('');
-    const [loading, setLoading]=useState(false);
-    const [errors, setErrors]=useState({});
     const handleSubmit=(e)=>{
         e.preventDefault();
-        setLoading(true);
         const newUserData={
             email:email,
             password:password,
             confirmPassword:confirmPassword,
             handle:handle,
         };
-        axios.post('/signup', newUserData)
-            .then(res=>{
-                console.log(res.data);
-                localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-                setLoading(false);
-                history.push('/')
-            })
-            .catch(err=>{
-                setErrors(err.response.data);
-                setLoading(false);
-            })
+        signupUser(newUserData, history)
     };
 
     return (
@@ -121,7 +109,15 @@ function Signup({classes, history}) {
 }
 
 Signup.propTypes={
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
+    logoutUse: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(Signup)
+const mapStateToProps =(state)=> ({
+    user: state.user,
+    UI: state.UI
+});
+
+export default connect(mapStateToProps,{signupUser})(withStyles(styles)(Signup))
