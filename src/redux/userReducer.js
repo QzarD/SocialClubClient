@@ -1,5 +1,14 @@
 import axios from "axios";
-import {CLEAR_ERRORS, LOADING_UI, LOADING_USER, SET_AUTHENTICATED, SET_ERRORS, SET_UNAUTHENTICATED, SET_USER} from "./types";
+import {
+    CLEAR_ERRORS,
+    LIKE_SCREAM,
+    LOADING_UI,
+    LOADING_USER,
+    SET_AUTHENTICATED,
+    SET_ERRORS,
+    SET_UNAUTHENTICATED,
+    SET_USER, UNLIKE_SCREAM
+} from "./types";
 
 
 const initialState={
@@ -25,6 +34,21 @@ export const userReducer = (state = initialState, action) => {
         case LOADING_USER:
             return {
                 ...state, loading:true
+            };
+        case LIKE_SCREAM:
+            return {
+                ...state, likes:[
+                    ...state.likes, {
+                    userHandle: state.credentials.handle,
+                    screamId: action.payload.screamId
+                    }
+                ]
+            };
+        case UNLIKE_SCREAM:
+            return {
+                ...state, likes: state.likes.filter(
+                    like=>like.screamId!==action.payload.screamId
+                )
             };
         default:
             return state
@@ -82,6 +106,14 @@ export const getUserData=()=>(dispatch)=>{
 export const uploadImage=(formData)=>(dispatch)=>{
     dispatch({type:LOADING_USER});
     axios.post('/user/image', formData)
+        .then(res=>{
+            dispatch(getUserData())
+        })
+        .catch(err=>console.log(err))
+};
+export const editUserDetails=(userDetails)=>(dispatch)=>{
+    dispatch({type:LOADING_USER});
+    axios.post('/user', userDetails)
         .then(res=>{
             dispatch(getUserData())
         })

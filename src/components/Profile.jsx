@@ -1,17 +1,19 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {Paper, Tooltip, withStyles} from "@material-ui/core";
+import {Paper, withStyles} from "@material-ui/core";
 import PropTypes from 'prop-types';
 import MuiLink from'@material-ui/core/Link'
 import Typography from "@material-ui/core/Typography";
 import {CalendarToday, LocationOn} from "@material-ui/icons";
 import LinkIcon from "@material-ui/icons/Link";
+import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 import EditIcon from "@material-ui/icons/Edit";
 import {Link} from "react-router-dom";
 import dayjs from "dayjs";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import {logoutUser, uploadImage} from "../redux/userReducer";
+import EditDetails from "./EditDetails";
+import MyButton from "../util/MyButton";
 
 const styles=(theme) => ({
     paper: {
@@ -79,6 +81,9 @@ function Profile({
         const fileInput=document.getElementById('imageInput');
         fileInput.click()
     };
+    const handleLogout=()=>{
+        logoutUser()
+    };
     let profileMarkup=loading
         ? <p>Loading...</p>
         : (authenticated
@@ -89,11 +94,10 @@ function Profile({
                         <input type="file" id='imageInput' onChange={handleImageChange}
                                hidden='hidden'
                         />
-                        <Tooltip title='Edit profile picture' placement='top'>
-                            <IconButton onClick={handleEditPicture} className='button'>
-                                <EditIcon color='primary'/>
-                            </IconButton>
-                        </Tooltip>
+                        <MyButton tip='Edit profile picture' onClick={handleEditPicture}
+                                  btnClassName='button'>
+                            <EditIcon color='primary'/>
+                        </MyButton>
                     </div>
                     <hr/>
                     <div className="profile-details">
@@ -124,6 +128,10 @@ function Profile({
                         <CalendarToday color='primary'/>{' '}
                         <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
                     </div>
+                    <MyButton tip='Logout' onClick={handleLogout}>
+                        <KeyboardReturn color='primary'/>
+                    </MyButton>
+                    <EditDetails/>
                 </div>
             </Paper>
         : <Paper className={classes.paper}>

@@ -20,6 +20,9 @@ code {
 .nav-container{
   margin: auto;
 }
+.nav-container svg{
+  color: white;
+}
 a{
   text-decoration: none;
 }
