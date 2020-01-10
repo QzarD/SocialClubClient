@@ -23,7 +23,7 @@ const styles={
     }
 };
 
-const PostScream=({classes, UI:{loading, errors}, postScream, clearErrors})=>{
+const PostScream=({classes, UI:{loading, errors, completePostScream}, postScream, clearErrors})=>{
     const [open, setOpen]=useState(false);
     const [body, setBody]=useState('');
     const [error, setError]=useState(null);
@@ -33,8 +33,10 @@ const PostScream=({classes, UI:{loading, errors}, postScream, clearErrors})=>{
     const handleClose=()=>{
         setOpen(false);
         setBody('');
-        clearErrors();
-        setError(null)
+        if (error) {
+            clearErrors();
+            setError(null)
+        }
     };
     const handleChange=(e)=>{
         setBody(e.target.value)
@@ -42,13 +44,15 @@ const PostScream=({classes, UI:{loading, errors}, postScream, clearErrors})=>{
     const handleSubmit=(e)=>{
         e.preventDefault();
         postScream({body: body});
-
-            handleClose()
-
     };
     useEffect(()=>{
         setError(errors.body)
     },[errors.body]);
+    useEffect(()=>{
+        if (completePostScream){
+            handleClose()
+        }
+    },[errors]);
 
     return (
         <>
@@ -91,7 +95,8 @@ PostScream.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    UI: state.UI
+    UI: state.UI,
+    completePostScream:state.data.completePostScream
 });
 
 export default connect (mapStateToProps,{postScream, clearErrors})(withStyles(styles)(PostScream))
