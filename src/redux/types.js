@@ -9,6 +9,8 @@ export const CLEAR_ERRORS='SocialClubClient/uiReducer/CLEAR_ERRORS';
 
 export const LOADING_DATA='SocialClubClient/dataReducer/LOADING_DATA';
 export const SET_SCREAMS='SocialClubClient/dataReducer/SET_SCREAMS';
-export const SET_SCREAM='SocialClubClient/dataReducer/SET_SCREAMS';
-export const LIKE_SCREAM='SocialClubClient/dataReducer/SET_SCREAMS';
-export const UNLIKE_SCREAM='SocialClubClient/dataReducer/SET_SCREAMS';
+export const SET_SCREAM='SocialClubClient/dataReducer/SET_SCREAM';
+export const LIKE_SCREAM='SocialClubClient/dataReducer/LIKE_SCREAM';
+export const UNLIKE_SCREAM='SocialClubClient/dataReducer/UNLIKE_SCREAM';
+export const DELETE_SCREAM='SocialClubClient/dataReducer/DELETE_SCREAM';
+export const POST_SCREAM='SocialClubClient/dataReducer/POST_SCREAM';

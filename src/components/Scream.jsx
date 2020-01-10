@@ -9,9 +9,11 @@ import PropTypes from "prop-types";
 import {likeScream, unlikeScream} from "../redux/dataReducer";
 import MyButton from "../util/MyButton";
 import {Chat, Favorite, FavoriteBorder} from "@material-ui/icons";
+import DeleteScream from "./DeleteScream";
 
 const styles={
     card:{
+        position: 'relative',
         display: 'flex',
         marginBottom: 20
     },
@@ -25,7 +27,7 @@ const styles={
 };
 
 function Scream({classes, scream : {body, createdAt, userImage, userHandle,
-    screamId, likeCount, commentCount}, user:{authenticated, likes}, likeScream, unlikeScream}) {
+    screamId, likeCount, commentCount}, user:{authenticated, likes, credentials:{handle}}, likeScream, unlikeScream}) {
     dayjs.extend(relativeTime);
     const likedScream=()=>{
         return !!(likes && likes.find(like => like.screamId === screamId));
@@ -47,6 +49,9 @@ function Scream({classes, scream : {body, createdAt, userImage, userHandle,
         </MyButton> : <MyButton tip='Like' onClick={likeScreamBtn}>
             <FavoriteBorder color='primary'/>
         </MyButton>);
+        const deleteCommentBtn = authenticated && userHandle === handle
+            ? <DeleteScream screamId={screamId} />
+            : null;
 
     return (
         <Card className={classes.card}>
@@ -55,6 +60,7 @@ function Scream({classes, scream : {body, createdAt, userImage, userHandle,
                 <Typography variant='h5'
                             component={Link} to={`/users/${userHandle}`}
                 >{userHandle}</Typography>
+                {deleteCommentBtn}
                 <Typography variant='body2' color='textSecondary'>{dayjs(createdAt).fromNow()}</Typography>
                 <Typography variant='body1'>{body}</Typography>
                 {likeButton}

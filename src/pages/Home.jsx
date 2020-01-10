@@ -9,8 +9,7 @@ import {getScreams} from "../redux/dataReducer";
 function Home({data:{screams, loading}, getScreams}) {
     useEffect(()=>{
     if (screams.length===0 && loading===false){
-        getScreams();
-        console.log('data')}
+        getScreams();}
     });
     let recentScreamsMarkup= (!loading)
     ? (screams.map(scream=> <Scream key={scream.screamId} scream={scream}/>))
