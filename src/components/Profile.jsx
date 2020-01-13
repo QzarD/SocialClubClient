@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import {logoutUser, uploadImage} from "../redux/userReducer";
 import EditDetails from "./EditDetails";
 import MyButton from "../util/MyButton";
+import ProfileSkeleton from "./ProfileSkeleton";
 
 const styles = (theme) => ({
     paper: {
@@ -88,7 +89,7 @@ function Profile({
     return (
         <>
             {loading
-                ? <p>Loading...</p>
+                ? <ProfileSkeleton/>
                 : (authenticated
                         ? <Paper className={classes.paper}>
                             <div className={classes.profile}>

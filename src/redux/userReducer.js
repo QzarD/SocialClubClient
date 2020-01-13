@@ -3,7 +3,7 @@ import {
     CLEAR_ERRORS,
     LIKE_SCREAM,
     LOADING_UI,
-    LOADING_USER,
+    LOADING_USER, MARK_NOTIFICATIONS_READ,
     SET_AUTHENTICATED,
     SET_ERRORS,
     SET_UNAUTHENTICATED,
@@ -50,6 +50,9 @@ export const userReducer = (state = initialState, action) => {
                     like=>like.screamId!==action.payload.screamId
                 )
             };
+        case MARK_NOTIFICATIONS_READ:
+            state.notifications.forEach(not=>not.read=true);
+            return {...state};
         default:
             return state
     }
@@ -119,6 +122,16 @@ export const editUserDetails=(userDetails)=>(dispatch)=>{
         })
         .catch(err=>console.log(err))
 };
+export const markNotificationsRead=(notificationIds)=>dispatch=>{
+    axios.post('/notifications', notificationIds)
+        .then(res=>{
+            dispatch({
+                type: MARK_NOTIFICATIONS_READ
+            })
+        })
+        .catch(err=>console.log(err))
+};
+
 
 const setAuthorizationHeader=(token)=>{
     const FBIdToken=`Bearer ${token}`;

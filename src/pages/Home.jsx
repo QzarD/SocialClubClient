@@ -5,15 +5,16 @@ import Profile from "../components/Profile";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getScreams} from "../redux/dataReducer";
+import ScreamSkeleton from "../components/ScreamSkeleton";
 
 function Home({data:{screams, loading}, getScreams}) {
     useEffect(()=>{
-    if (screams.length===0 && loading===false){
-        getScreams();}
-    });
+        getScreams()
+    },[]);
+
     let recentScreamsMarkup= (!loading)
     ? (screams.map(scream=> <Scream key={scream.screamId} scream={scream}/>))
-        : (<p>Loading...</p>);
+        : (<ScreamSkeleton/>);
 
     return (
         <Grid container spacing={6}>

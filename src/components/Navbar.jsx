@@ -6,31 +6,30 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import MyButton from "../util/MyButton";
-import {Home, Notifications} from "@material-ui/icons";
+import {Home} from "@material-ui/icons";
 import PostScream from "./PostScream";
+import Notifications from "./Notifications";
 
 function Navbar({authenticated}) {
     return (
         <AppBar>
             <Toolbar className='nav-container'>
                 {authenticated
-                    ?   <>
-                            <PostScream/>
+                    ? <>
+                        <PostScream/>
                         <Link to='/'>
                             <MyButton tip='Home'>
                                 <Home/>
                             </MyButton>
                         </Link>
-                        <MyButton tip='Notifications'>
-                            <Notifications/>
-                        </MyButton>
-                        </>
+                        <Notifications/>
+                    </>
                     :
-                        <>
-                            <Button color='inherit' component={Link} to='/login'>Login</Button>
-                            <Button color='inherit' component={Link} to='/'>Home</Button>
-                            <Button color='inherit' component={Link} to='/signup'>Signup</Button>
-                        </>
+                    <>
+                        <Button color='inherit' component={Link} to='/login'>Login</Button>
+                        <Button color='inherit' component={Link} to='/'>Home</Button>
+                        <Button color='inherit' component={Link} to='/signup'>Signup</Button>
+                    </>
                 }
             </Toolbar>
         </AppBar>

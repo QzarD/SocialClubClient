@@ -53,7 +53,7 @@ function Scream({
                     <Chat color='primary'/>
                 </MyButton>
                 <span>{commentCount} comments</span>
-                <ScreamDialog screamId={screamId} openDialog={openDialog}/>
+                <ScreamDialog screamId={screamId} userHandle={userHandle} openDialog={openDialog}/>
             </CardContent>
         </Card>
     );

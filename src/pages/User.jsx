@@ -6,6 +6,8 @@ import {Grid} from "@material-ui/core";
 import Scream from "../components/Scream";
 import StaticProfile from "../components/StaticProfile";
 import axios from 'axios';
+import ScreamSkeleton from "../components/ScreamSkeleton";
+import ProfileSkeleton from "../components/ProfileSkeleton";
 
 class User extends Component{
     state={
@@ -33,7 +35,7 @@ class User extends Component{
             <Grid container spacing={6}>
                 <Grid item sm={8} xs={12}>
                     {loading
-                        ? <p>Loading data...</p>
+                        ? <ScreamSkeleton/>
                         : (screams === null)
                             ? <p>No screams from this user</p>
                             : !screamIdParam
@@ -47,7 +49,7 @@ class User extends Component{
                 </Grid>
                 <Grid item sm={4} xs={12}>
                     {this.state.profile === null
-                        ? <p>Loading profile...</p>
+                        ? <ProfileSkeleton/>
                         : <StaticProfile user={this.state.profile}/>}
                 </Grid>
             </Grid>

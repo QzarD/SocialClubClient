@@ -51,15 +51,23 @@ const styles = {
 function ScreamDialog({
                           openDialog, classes, scream: {
         body, createdAt, likeCount,
-        commentCount, userImage, userHandle, comments
-    }, UI: {loading}, screamId, getScream, clearErrors
+        commentCount, userImage, comments
+    }, UI: {loading}, screamId, userHandle, getScream, clearErrors
                       }) {
     const [open, setOpen] = useState(false);
+    const [oldPath, setOldPath] = useState('');
     const handleOpen = () => {
+        setOldPath(window.location.pathname);
+        let newPath=`/users/${userHandle}/scream/${screamId}`;
+        if (oldPath===newPath){
+            setOldPath(`/users/${userHandle}`)
+        }
+        window.history.pushState(null, null, newPath);
         setOpen(!open);
-        getScream(screamId)
+        getScream(screamId);
     };
     const handleClose = () => {
+        window.history.pushState(null, null, oldPath);
         setOpen(!open);
         clearErrors();
     };
@@ -83,7 +91,7 @@ function ScreamDialog({
                         ? <div className={classes.spinnerDiv}>
                             <CircularProgress size={100} thickness={2}/>
                         </div>
-                        : <Grid container spacing={16} className={classes.cardScream}>
+                        : <Grid container spacing={6} className={classes.cardScream}>
                             <Grid item sm={5}>
                                 <img src={userImage} alt='Profile' className={classes.profileImage}/>
                             </Grid>
