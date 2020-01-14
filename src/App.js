@@ -19,23 +19,22 @@ import User from "./pages/User";
 
 const theme = createMuiTheme(themeFile);
 
+axios.defaults.baseURL = "https://us-central1-socialclub-e188d.cloudfunctions.net/api";
+
 const token=localStorage.FBIdToken;
 if(token){
     const decodedToken=jwtDecode(token);
     if(decodedToken.exp*1000<Date.now()){
         store.dispatch(logoutUser());
         window.location.href='/login';
-        console.log('false')
     } else {
         store.dispatch({type: SET_AUTHENTICATED});
         axios.defaults.headers.common['Authorization']=token;
         store.dispatch(getUserData());
-        console.log('true')
     }
 }
 
 export default function App() {
-    /*let history=useHistory();*/
 
     return (
         <MuiThemeProvider theme={theme}>

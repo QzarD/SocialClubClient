@@ -10,7 +10,7 @@ import ScreamSkeleton from "../components/ScreamSkeleton";
 function Home({data:{screams, loading}, getScreams}) {
     useEffect(()=>{
         getScreams()
-    },[]);
+    },[getScreams]);
 
     let recentScreamsMarkup= (!loading)
     ? (screams.map(scream=> <Scream key={scream.screamId} scream={scream}/>))

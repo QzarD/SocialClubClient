@@ -42,7 +42,7 @@ const styles = {
         marginBottom:50
     },
     visibleSeparator:{
-        width:'100%',
+        width:'90%',
         borderBottom:'1px solid rgba(0,0,0,0.1)',
         marginBottom: 20
     }
@@ -91,7 +91,7 @@ function ScreamDialog({
                         ? <div className={classes.spinnerDiv}>
                             <CircularProgress size={100} thickness={2}/>
                         </div>
-                        : <Grid container spacing={6} className={classes.cardScream}>
+                        : <Grid container spacing={1} className={classes.cardScream}>
                             <Grid item sm={5}>
                                 <img src={userImage} alt='Profile' className={classes.profileImage}/>
                             </Grid>

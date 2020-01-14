@@ -1,8 +1,8 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {markNotificationsRead} from "../redux/userReducer";
-import {Icon, Menu, Tooltip} from "@material-ui/core";
+import {Menu, Tooltip} from "@material-ui/core";
 import Badge from "@material-ui/core/Badge";
 import NotificationIcon from "@material-ui/icons/Notifications";
 import dayjs from "dayjs";

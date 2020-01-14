@@ -17,7 +17,7 @@ class User extends Component{
     componentDidMount() {
         const handle=this.props.match.params.handle;
         const screamId=this.props.match.params.screamId;
-        if(screamId) this.setState({screamIdParam: screamId})
+        if(screamId) this.setState({screamIdParam: screamId});
         this.props.getUserData(handle);
         axios.get(`/user/${handle}`)
             .then(res=>{
@@ -42,7 +42,7 @@ class User extends Component{
                         ? screams.map(scream => <Scream key={scream.screamId} scream={scream}/>)
                                 : screams.map(scream=>{
                                     if(scream.screamId !== screamIdParam)
-                                        return <Scream key={scream.screamId} scream={scream}/>
+                                        return <Scream key={scream.screamId} scream={scream}/>;
                                     else return <Scream key={scream.screamId} scream={scream} openDialog/>
                                 })
                     }

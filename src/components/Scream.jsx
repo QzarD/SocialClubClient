@@ -31,7 +31,7 @@ function Scream({
                     openDialog, classes, scream: {
         body, createdAt, userImage, userHandle,
         screamId, likeCount, commentCount
-    }, user: {authenticated, likes, credentials: {handle}}}) {
+    }, user: {authenticated, credentials: {handle}}}) {
     dayjs.extend(relativeTime);
     const deleteCommentBtn = authenticated && userHandle === handle
         ? <DeleteScream screamId={screamId}/>

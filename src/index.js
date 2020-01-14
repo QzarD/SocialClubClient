@@ -6,13 +6,22 @@ import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./redux/store";
 
-ReactDOM.render(
-    <BrowserRouter>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    </BrowserRouter>
-, document.getElementById('root'));
+import { polyfillLoader } from 'polyfill-io-feature-detection';
+// This function load polyfills only if needed. By default it uses polyfill.io
+polyfillLoader({
+    "features": "Promise,fetch",
+    "onCompleted": main
+});
+
+function main() {
+    ReactDOM.render(
+        <BrowserRouter>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </BrowserRouter>
+        , document.getElementById('root'));
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
